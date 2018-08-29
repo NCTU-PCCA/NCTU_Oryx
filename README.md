@@ -48,5 +48,5 @@ Then in the corresponding code to test, you may put(one or more) control sequenc
 //---codebook test=Math/extgcd
 ```
 
-After that issue `python3 codebook.py test [all]`, you will see the verdict of each specified testsuite. The `all` argument will test all the snnipet in the directory, even when they are not in `spec.py`.
+After that issue `python3 codebook.py test [all]`, you will see the verdict of each specified testsuite. The `all` argument will test all the snnipet in the working directory, even when they are not in `spec.py`.
 ![Codebook Test](/codebook_test.png?raw=true)

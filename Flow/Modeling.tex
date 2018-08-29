@@ -1,0 +1,8 @@
+%---codebook desc
+\paragraph{Minimum Path Covering on DAG}
+\begin{enumerate}
+\item Path covering without path intersection: For each vertex $v$, we may construct two vertices $v_i$ and $v_o$, then for each edge $u\rightarrow v$, connect $u_o\rightarrow v_i$. \\
+This forms a bipartite graph. Each selected edge means a "join" of paths. Therefore the cardinality of the minimum path covering on the original graph will be $|V| - m$, where $m$ is the cardinality of the maximum bipartite matching.
+\item Covering that allows intersection: Perform Floyd-Warshall to obtain trasitive closure first, then make edge for each pair that are connected, the problem subsequently reduces to the non-intersecting case.
+\end{enumerate}
+%---codebook end

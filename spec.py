@@ -5,10 +5,11 @@ math = {
 }
 flow = {
     'Dinic':'Flow/Dinic.cpp',
-	'Min Cost Flow':'Flow/MinCostFlow.cpp'
+	'Min Cost Flow':'Flow/MinCostFlow.cpp',
+    'Common Modeling Technique':'Flow/Modeling.tex'
 }
 string = {
-    'AC Automata':'String/AutoAC.cpp'
+    'Aho-Corasick Automata':'String/AutoAC.cpp'
 }
 graph = {
     'Cut Vertex and BCC':'Graph/CutBCC.cpp'

@@ -25,8 +25,10 @@ def parseCommand(cmd, content=None, testPath=None, compileFlags=None):
             content.write('\\begin{lstlisting}\n')
             printing = True
         elif 'end' in cmds:
-            content.write('\\end{lstlisting}\n')
+            if printing and not desc:
+                content.write('\\end{lstlisting}\n')
             printing = False
+            desc = False
         elif 'desc' in cmds:
             printing = True
             desc = True
@@ -53,7 +55,7 @@ def gen():
                         if (sline.startswith('//---codebook ') or
                                 sline.startswith('/*---codebook ') or
                                 sline.startswith('%---codebook ')):
-                            parseCommand(sline[14:].strip(), content)
+                            parseCommand(sline[(13 if sline[0] == '%' else 14):].strip(), content)
                         elif sline.startswith('*/') and desc:
                             printing = False
                             desc = False
@@ -142,10 +144,11 @@ def testCodebook(testDir):
     for sectionName, section in sections.items():
         print('Testing the ' + bcolors.OKBLUE + sectionName + bcolors.ENDC + ' section')
         for codeTitle, codeFile in section.items():
-            print(' --Testing ' + bcolors.OKBLUE + codeTitle + bcolors.ENDC)
-            testSingle(testDir, os.path.join( \
-                    os.path.dirname(os.path.abspath(__file__)), \
-                    codeFile))
+            if codeFile.endswith(included):
+                print(' --Testing ' + bcolors.OKBLUE + codeTitle + bcolors.ENDC)
+                testSingle(testDir, os.path.join( \
+                        os.path.dirname(os.path.abspath(__file__)), \
+                        codeFile))
 
 def test(testAll=True, testDir='tests'):
     testDir = os.path.join(os.path.dirname(os.path.abspath(__file__)), testDir)
