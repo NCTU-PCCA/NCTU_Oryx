@@ -44,9 +44,9 @@ def parseCommand(cmd, content=None, testPath=None, compileFlags=None):
 def gen():
     global printing, desc
     with open('content.tex', 'w+') as content:
-        for sectionName, section in sections.items():
+        for sectionName, section in sections:
             content.write('\\section{'+sectionName+'}\n')
-            for codeTitle, codeFile in section.items():
+            for codeTitle, codeFile in section:
                 content.write('\\subsection{'+codeTitle+'}\n')
                 print('Inserting ' + bcolors.OKBLUE + codeFile + bcolors.ENDC)
                 with open(codeFile) as f:
@@ -126,7 +126,7 @@ def testSingle(testDir, filename):
                 'There\'s no testsuite to run for the snippet')
 
 def testAllCode(testDir):
-    excluded = ['tests', '__pycache__', 'tmp']
+    excluded = ['tests', '__pycache__', 'tmp', '.git']
     included = ('.cpp', '.c')
     for root, dirs, files in os.walk('.'):
         dirs[:] = [d for d in dirs if d not in excluded]
@@ -141,9 +141,9 @@ def testAllCode(testDir):
 
 def testCodebook(testDir):
     included = ('.cpp', '.c')
-    for sectionName, section in sections.items():
+    for sectionName, section in sections:
         print('Testing the ' + bcolors.OKBLUE + sectionName + bcolors.ENDC + ' section')
-        for codeTitle, codeFile in section.items():
+        for codeTitle, codeFile in section:
             if codeFile.endswith(included):
                 print(' --Testing ' + bcolors.OKBLUE + codeTitle + bcolors.ENDC)
                 testSingle(testDir, os.path.join( \
@@ -177,5 +177,5 @@ if __name__ == '__main__':
             test(False)
         elif sys.argv[2] == 'all':
             test(True)
-        else:
-            test(False)
+        elif sys.argv[2] == 'single' and len(sys.argv) == 4:
+            testSingle('tests', sys.argv[3])

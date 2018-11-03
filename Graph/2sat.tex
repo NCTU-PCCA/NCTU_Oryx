@@ -1,0 +1,6 @@
+%---codebook desc
+\paragraph{Problem}
+Satisfy the boolean expression like $(x_0 \lor x_1) \land (x_1 \lor \neg x_3)\land ... (x_5 \lor x_2)$
+\paragraph{Model}
+For the expression $(x_0 \lor x_1)$, make edge $\neg x_0 \rightarrow x_1$, then none of the statements $x_i$ and $\neg x_i$ can be in the same SCC.
+%---codebook end

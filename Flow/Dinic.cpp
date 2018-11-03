@@ -1,5 +1,7 @@
 #include <stdio.h>
 #include <iostream>
+#include <vector>
+#include <queue>
 
 using namespace std;
 
@@ -7,10 +9,7 @@ using namespace std;
 //---codebook start
 #define INF 0x3f3f3f3f
 #define LINF 0x3f3f3f3f3f3f3f3fLL
-#include <vector>
-#include <queue>
-struct Dinic
-{
+struct Dinic {
 	typedef long long int T;
 	struct edge{
 		int u, v;

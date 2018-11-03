@@ -1,14 +1,14 @@
 #include<iostream>
 #include <stdio.h>
+#include <stack>
+#include <queue>
+#include <vector>
 //---codebook test=Graph/cutbcc
 /*---codebook desc
 \paragraph{Determining Bridge}
 $low[v] > pre[u] \Rightarrow v$ is a cut vertex and $(u,v)$ is a bridge
 */
 //---codebook start
-#include <stack>
-#include <queue>
-#include <vector>
 #define MAXN 1005
 using namespace std;
 struct edge {

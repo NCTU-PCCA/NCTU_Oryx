@@ -1,11 +1,11 @@
 #include <iostream>
 #include <string.h>
+#include <map>
+#include <queue>
 using namespace std;
 int cnt[155];
 //---codebook test=String/AC
 //---codebook start
-#include <map>
-#include <queue>
 #define MAXN 1000005
 template<typename T>
 struct AutoAC{

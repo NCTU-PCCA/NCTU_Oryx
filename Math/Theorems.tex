@@ -1,0 +1,22 @@
+%---codebook desc
+\paragraph{Josephus Problem}
+Let $f(i)$ be the survivor in the round with $i$ people, in the numbering from $0\sim i-1$. Then we have $f(1) = 0$ and $f(i+1) = (f(i)+k) mod (i+1)$. The $+k$ term is to restore the numbering, but stepping through $k$ people. Note that $f(i)$ and $f(i+1)$ used distinct numbering, where $k$th in $f(i+1)$'s is the $0$th in $f(i)$'s.
+\paragraph{Pick's Theorem}
+For a polygon consist integral-coordinate vertices. Let the number of integral points on the border of the polygon be $a$, and the number of integral points inside the polygon be $b$, then we have the area of the polygon:
+$$
+A = a+\frac{b}{2}-1
+$$
+\paragraph{Burnside's Lemma}
+$$
+|X/G| = \frac{1}{|G|}\sum_{g\in G}{|X_g|}
+$$
+\paragraph{Mobius Inversion}
+For $n\in \mathbb{N}$, if
+$$
+g(n)=\sum_{d|n}{f(d)}
+$$
+then
+$$
+f(n)=\sum_{d|n}{\mu(d)g(n/d)}
+$$
+%---codebook end
