@@ -224,6 +224,46 @@ struct FFT{
 comp A[MAXN], B[MAXN];
 comp AB[MAXN];
 \end{lstlisting}
+\subsection{Mobius Function and Sieve}
+Given ${p_n}$ be a sequence of distinct primes:
+$$
+\mu(x)=
+\begin{cases}
+	1, &\text{if $x=p_1p_2...p_k$, $k$ is even }\\
+	-1, &\text{where $k$ above is odd}\\
+	0, &\text{if $x$ is not square free}
+\end{cases}
+$$
+\begin{lstlisting}
+#define ll long long int
+#define MAXN 1000005
+
+ll n;
+int isp[1000005];
+int mu[1000005];
+vector<ll> p;
+
+void sieve() {
+	for(int i=0; i<MAXN; i++) isp[i] = 1;
+	isp[0] = isp[1] = 0;
+	mu[1] = 1;
+	for(ll i=2; i<MAXN; i++) {
+		if(isp[i]){
+			p.push_back(i);
+			mu[i] = -1;
+		}
+		for(int j=0; j<(int)p.size() && i*p[j] < MAXN; j++) {
+			ll x = p[j] * i;
+			isp[x] = 0;
+			if(i % p[j] == 0) {
+				mu[x] = 0;
+				break;
+			}
+			mu[x] = -mu[i];
+		}
+	}
+}
+\end{lstlisting}
 \subsection{Common Theorems}
 \paragraph{Josephus Problem}
 Let $f(i)$ be the survivor in the round with $i$ people, in the numbering from $0\sim i-1$. Then we have $f(1) = 0$ and $f(i+1) = (f(i)+k) mod (i+1)$. The $+k$ term is to restore the numbering, but stepping through $k$ people. Note that $f(i)$ and $f(i+1)$ used distinct numbering, where $k$th in $f(i+1)$'s is the $0$th in $f(i)$'s.
@@ -356,6 +396,41 @@ int main() {
     return 0;
 }
 \end{lstlisting}
+\subsection{Tarjan SCC}
+\begin{lstlisting}
+vector<int> G[MAXN], scc[MAXN];
+vector<int> stk;
+int clk, scnt;
+int low[MAXN], pre[MAXN], ins[MAXN];
+
+void dfs(int u) {
+	ins[u] = 1;
+	stk.push_back(u);
+	low[u] = pre[u] = ++clk;
+	for(int i=0; i<(int)G[u].size(); i++) {
+		int v = G[u][i];
+		if(!pre[v]) {
+			dfs(v);
+			low[u] = min(low[u], low[v]);
+		} else if(ins[v]) {
+			low[u] = min(low[u], pre[v]);
+		}
+	}
+	if(low[u] == pre[u]) {
+		scnt++;
+		while(stk.size() && stk.back() != u) {
+			scc[scnt].push_back(stk.back());
+			ins[stk.back()] = 0;
+			stk.pop_back();
+		}
+		if(stk.size() && stk.back() == u) {
+			scc[scnt].push_back(u);
+			stk.pop_back();
+			ins[u] = 0;
+		}
+	}
+}
+\end{lstlisting}
 \subsection{2-SAT Model}
 \paragraph{Problem}
 Satisfy the boolean expression like $(x_0 \lor x_1) \land (x_1 \lor \neg x_3)\land ... (x_5 \lor x_2)$
@@ -470,6 +545,46 @@ int main(){
 		else printLL(ANS),puts("");
 	}
 	return 0;
+}
+\end{lstlisting}
+\subsection{Minimum Mean Cycle}
+\paragraph{Remark}
+The testcase of the snippet has been modified
+\begin{lstlisting}
+#define MAXN 5005
+#define INF 2147483647000
+#define eps 1e-9
+#define ll long long int
+
+struct edge {
+	int v; ll w;
+	edge(int _v, ll _w){v=_v, w=_w;}
+};
+
+ll F[MAXN][MAXN];
+
+double MMC(vector<vector<edge> > &G, int n) {
+	double ans = 1e9;
+	for(int i=0; i<n; i++) F[i][0] = 0;
+	for(int i=0; i<n; i++) {
+		for(int j=1; j<=n; j++) F[i][j] = INF;
+	}
+	for(int k=0; k<=n; k++) {
+		for(int i=0; i<n; i++) {
+			for(int j=0; j<(int)G[i].size(); j++) {
+				edge &e = G[i][j];
+				F[e.v][k+1] = min(F[e.v][k+1], F[i][k] + e.w);
+			}
+		}
+	}
+	for(int i=0; i<n; i++) {
+		double tmp = 0;
+		for(int k=0; k<n; k++) {
+			tmp = max(tmp, (double)(F[i][n] - F[i][k])/(double)(n-k));
+		}
+		ans = min(ans, tmp);
+	}
+	return ans;
 }
 \end{lstlisting}
 \section{String}
